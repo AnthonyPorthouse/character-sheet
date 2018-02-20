@@ -1,7 +1,19 @@
 /* eslint-disable no-shadow */
 import skills from '../data/skills';
 
-const state = {};
+function initState() {
+  const state = {};
+
+  Object.entries(skills).forEach(([key, value]) => {
+    const skill = value;
+    skill.points = 0;
+    state[key] = skill;
+  });
+
+  return state;
+}
+
+const state = initState();
 
 Object.entries(skills).forEach(([key, value]) => {
   const skill = value;

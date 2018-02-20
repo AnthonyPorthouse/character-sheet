@@ -1,4 +1,4 @@
-import { STAT_STR, STAT_DEX, STAT_INT, STAT_WIS, STAT_CHA } from '../modules/stats';
+import { STAT_STR, STAT_DEX, STAT_INT, STAT_WIS, STAT_CHA } from '../data/stats';
 
 export const SKILL_ACROBATICS = 'acrobatics';
 export const SKILL_APPRAISE = 'appraise';

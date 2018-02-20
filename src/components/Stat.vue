@@ -2,6 +2,7 @@
   <div :class="getClass">
     <header>
       {{ getFormattedStatName }}
+      <small>{{ getStatName }}</small>
     </header>
     <IncDecInput
       :min="0"
@@ -31,8 +32,12 @@ export default {
   },
 
   computed: {
-    getFormattedStatName() {
-      return this.$store.getters['stats/getFormattedAbbreviation'](this.stat);
+    getStat() {
+      return this.$store.getters['stats/getStat'](this.stat);
+    },
+
+    getStatName() {
+      return this.getStat.name;
     },
 
     getClass() {
@@ -40,11 +45,11 @@ export default {
     },
 
     getStatValue() {
-      return this.$store.getters['stats/getValue'](this.stat);
+      return this.getStat.value;
     },
 
-    getStatModifier() {
-      return this.$store.getters['stats/getModifier'](this.stat);
+    getFormattedStatName() {
+      return this.$store.getters['stats/getFormattedAbbreviation'](this.stat);
     },
 
     getFormattedStatModifier() {

@@ -1,45 +1,37 @@
 /* eslint-disable no-shadow */
-export const STAT_STR = 'str';
-export const STAT_DEX = 'dex';
-export const STAT_CON = 'con';
-export const STAT_INT = 'int';
-export const STAT_WIS = 'wis';
-export const STAT_CHA = 'cha';
+import stats from '../data/stats';
 
-const state = {
-  [STAT_STR]: {
-    name: 'Strength',
-    value: 10,
-  },
-  [STAT_DEX]: {
-    name: 'Dexterity',
-    value: 10,
-  },
-  [STAT_CON]: {
-    name: 'Constitution',
-    value: 10,
-  },
-  [STAT_INT]: {
-    name: 'Intelligence',
-    value: 10,
-  },
-  [STAT_WIS]: {
-    name: 'Wisdom',
-    value: 10,
-  },
-  [STAT_CHA]: {
-    name: 'Charisma',
-    value: 10,
-  },
-};
+function initState() {
+  const state = {};
+
+  Object.entries(stats).forEach(([key, value]) => {
+    state[key] = {
+      id: value.id,
+      name: value.name,
+      value: value.value,
+    };
+  });
+
+  return state;
+}
+
+const state = initState();
 
 const getters = {
   getAllStats(state) {
     return Object.keys(state);
   },
 
-  getValue(state) {
-    return stat => state[stat].value;
+  getStat(state) {
+    return stat => state[stat];
+  },
+
+  getName(state, getters) {
+    return stat => getters.getStat(stat).name;
+  },
+
+  getValue(state, getters) {
+    return stat => getters.getStat(stat).value;
   },
 
   getModifier(state, getters) {
@@ -55,8 +47,8 @@ const getters = {
     };
   },
 
-  getFormattedAbbreviation() {
-    return stat => stat.toUpperCase();
+  getFormattedAbbreviation(state, getters) {
+    return stat => getters.getStat(stat).id.toUpperCase();
   },
 };
 
