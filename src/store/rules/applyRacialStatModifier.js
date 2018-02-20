@@ -14,7 +14,7 @@ export default {
       }
 
       if (modifier.stat === currentStat) {
-        return total + modifier.value;
+        return total + modifier.modifier;
       }
 
       return 0;
