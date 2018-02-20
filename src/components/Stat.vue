@@ -45,7 +45,7 @@ export default {
     },
 
     getStatValue() {
-      return this.getStat.value;
+      return this.$store.getters['stats/getValue'](this.stat);
     },
 
     getFormattedStatName() {

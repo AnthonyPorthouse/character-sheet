@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 import stats from '../data/stats';
+import applyRacialStatModifiers from '../rules/applyRacialStatModifier';
 
 function initState() {
   const state = {};
@@ -31,11 +32,28 @@ const getters = {
   },
 
   getValue(state, getters) {
-    return stat => getters.getStat(stat).value;
+    return stat => getters.getModifiedValue(stat);
   },
 
   getModifier(state, getters) {
     return stat => Math.floor(getters.getValue(stat) / 2) - 5;
+  },
+
+  getModifiedValue(state, getters, rootState, rootGetters) {
+    const rules = [
+      applyRacialStatModifiers,
+    ];
+
+    return (statName) => {
+      const stat = getters.getStat(statName);
+
+      // eslint-disable-next-line
+      const modifier = rules.reduce((currentValue, rule) => {
+        return currentValue + rule.apply(stat, rootState, rootGetters);
+      }, 0);
+
+      return stat.value + modifier;
+    };
   },
 
   getFormattedModifier(state, getters) {
