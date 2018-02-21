@@ -2,6 +2,11 @@
   <div class="Race">
     <select @change="setSelectedRace">
       <option
+        selected
+        disabled>
+        Select Race
+      </option>
+      <option
         v-for="race in races"
         :key="race.id"
         :value="race.id">

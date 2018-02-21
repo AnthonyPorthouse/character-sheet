@@ -35,11 +35,7 @@ const getters = {
     return stat => getters.getModifiedValue(stat);
   },
 
-  getModifier(state, getters) {
-    return stat => Math.floor(getters.getValue(stat) / 2) - 5;
-  },
-
-  getModifiedValue(state, getters, rootState, rootGetters) {
+  getAppliedValueModifier(state, getters, rootState, rootGetters) {
     const rules = [
       applyRacialStatModifiers,
     ];
@@ -49,11 +45,22 @@ const getters = {
 
       // eslint-disable-next-line
       const modifier = rules.reduce((currentValue, rule) => {
-        return currentValue + rule.apply(stat, rootState, rootGetters);
+        return currentValue + rule(stat.id, rootState, rootGetters);
       }, 0);
 
-      return stat.value + modifier;
+      return modifier;
     };
+  },
+
+  getModifiedValue(state, getters) {
+    return (statName) => {
+      const stat = getters.getStat(statName);
+      return stat.value + getters.getAppliedValueModifier(statName);
+    };
+  },
+
+  getModifier(state, getters) {
+    return stat => Math.floor(getters.getValue(stat) / 2) - 5;
   },
 
   getFormattedModifier(state, getters) {
@@ -73,7 +80,11 @@ const getters = {
 const mutations = {
   setValue(state, payload) {
     const value = payload.value;
-    state[payload.stat].value = (value >= 0) ? value : 0;
+    const modifier = payload.modifier;
+
+    const newBaseValue = value - modifier;
+
+    state[payload.stat].value = (newBaseValue >= 0) ? newBaseValue : 0;
   },
 };
 

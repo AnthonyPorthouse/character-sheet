@@ -48,6 +48,10 @@ export default {
       return this.$store.getters['stats/getValue'](this.stat);
     },
 
+    getStatValueModifier() {
+      return this.$store.getters['stats/getAppliedValueModifier'](this.stat);
+    },
+
     getFormattedStatName() {
       return this.$store.getters['stats/getFormattedAbbreviation'](this.stat);
     },
@@ -61,6 +65,7 @@ export default {
     setStatValue(value) {
       this.$store.commit('stats/setValue', {
         stat: this.stat,
+        modifier: this.getStatValueModifier,
         value,
       });
     },

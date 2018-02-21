@@ -1,23 +1,21 @@
-export default {
-  apply(currentStat, state, getters) {
-    const race = getters['race/getSelectedRace'];
+export default function (currentStat, state, getters) {
+  const race = getters['race/getSelectedRace'];
 
-    if (!race) {
-      return 0;
+  if (!race) {
+    return 0;
+  }
+
+  const statModifiers = race.statModifiers;
+
+  return statModifiers.reduce((total, modifier) => {
+    if (Array.isArray(modifier.stat)) {
+      // TODO: implement selecting stat from given list
     }
 
-    const statModifiers = race.statModifiers;
+    if (modifier.stat === currentStat) {
+      return total + modifier.modifier;
+    }
 
-    return statModifiers.reduce((total, modifier) => {
-      if (Array.isArray(modifier.stat)) {
-        // TODO: implement selecting stat from given list
-      }
-
-      if (modifier.stat === currentStat) {
-        return total + modifier.modifier;
-      }
-
-      return 0;
-    }, 0);
-  },
-};
+    return total;
+  }, 0);
+}

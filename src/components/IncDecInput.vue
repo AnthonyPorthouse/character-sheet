@@ -6,7 +6,7 @@
       :min="getMin"
       :max="getMax"
       @input="change"
-      :value="currentValue">
+      :value="value">
     <button @click.prevent="increment">+</button>
   </div>
 </template>
@@ -31,12 +31,6 @@ export default {
     },
   },
 
-  data() {
-    return {
-      currentValue: this.value,
-    };
-  },
-
   computed: {
     getMin() {
       return this.min;
@@ -48,11 +42,11 @@ export default {
 
   methods: {
     increment() {
-      this.setValue(this.currentValue + 1);
+      this.setValue(this.value + 1);
     },
 
     decrement() {
-      this.setValue(this.currentValue - 1);
+      this.setValue(this.value - 1);
     },
 
     change(e) {
@@ -60,17 +54,17 @@ export default {
     },
 
     setValue(val) {
-      this.currentValue = val;
+      let value = val;
 
-      if (this.min !== undefined && val < this.min) {
-        this.currentValue = this.min;
+      if (this.min !== undefined && value < this.min) {
+        value = this.min;
       }
 
-      if (this.max !== undefined && val > this.max) {
-        this.currentValue = this.max;
+      if (this.max !== undefined && value > this.max) {
+        value = this.max;
       }
 
-      this.$emit('update', this.currentValue);
+      this.$emit('update', value);
     },
   },
 };

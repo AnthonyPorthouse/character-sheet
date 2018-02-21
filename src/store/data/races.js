@@ -13,7 +13,7 @@ export default {
   [RACE_DWARF]: {
     id: RACE_DWARF,
     name: 'Dwarf',
-    abilityScoreModifiers: [
+    statModifiers: [
       {
         stat: STAT_CON,
         modifier: 2,
@@ -81,5 +81,49 @@ export default {
     ],
     size: SIZE_MEDIUM,
     speed: 30,
+  },
+  [RACE_HALF_ORC]: {
+    id: RACE_HALF_ORC,
+    name: 'Half-orc',
+    statModifiers: [
+      {
+        stat: [STAT_STR, STAT_DEX, STAT_CON, STAT_INT, STAT_WIS, STAT_CHA],
+        modifier: 2,
+      },
+    ],
+    size: SIZE_MEDIUM,
+    speed: 30,
+  },
+  [RACE_HALFLING]: {
+    id: RACE_HALFLING,
+    name: 'Halfling',
+    statModifiers: [
+      {
+        stat: STAT_DEX,
+        modifier: 2,
+      },
+      {
+        stat: STAT_CHA,
+        modifier: 2,
+      },
+      {
+        stat: STAT_STR,
+        modifier: -2,
+      },
+    ],
+    size: SIZE_SMALL,
+    speed: 20,
+  },
+  [RACE_HUMAN]: {
+    id: RACE_HUMAN,
+    name: 'Human',
+    statModifiers: [
+      {
+        stat: [STAT_STR, STAT_DEX, STAT_CON, STAT_INT, STAT_WIS, STAT_CHA],
+        modifier: 2,
+      },
+    ],
+    size: SIZE_SMALL,
+    speed: 20,
   },
 };
