@@ -43,12 +43,10 @@ const getters = {
     return (statName) => {
       const stat = getters.getStat(statName);
 
-      // eslint-disable-next-line
-      const modifier = rules.reduce((currentValue, rule) => {
-        return currentValue + rule(stat.id, rootState, rootGetters);
+      return rules.reduce((currentValue, rule) => {
+        const ruleValue = rule(stat.id, rootState, rootGetters);
+        return currentValue + ruleValue;
       }, 0);
-
-      return modifier;
     };
   },
 

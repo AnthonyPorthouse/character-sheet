@@ -5,6 +5,7 @@ function initState() {
   const state = {
     races,
     selectedRace: undefined,
+    customModifiers: [],
   };
 
   return state;
@@ -20,11 +21,37 @@ const getters = {
   getSelectedRace(state) {
     return state.races[state.selectedRace];
   },
+
+  getCustomModifiers(state) {
+    return state.customModifiers;
+  },
+
+  getSelectableModifiers(state, getters) {
+    const race = getters.getSelectedRace;
+
+    if (!race) {
+      return [];
+    }
+
+    return race.statModifiers.filter(el => Array.isArray(el.stat));
+  },
+
+  hasSelectableModifiers(state, getters) {
+    return getters.getSelectableModifiers.length > 0;
+  },
 };
 
 const mutations = {
   setSelectedRace(state, value) {
     state.selectedRace = value;
+    state.customModifiers = [];
+  },
+
+  setCustomModifier(state, { key, modifier, stat }) {
+    state.customModifiers.splice(key, 1, {
+      stat,
+      modifier,
+    });
   },
 };
 

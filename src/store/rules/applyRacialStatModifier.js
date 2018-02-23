@@ -1,21 +1,28 @@
 export default function (currentStat, state, getters) {
   const race = getters['race/getSelectedRace'];
+  const customModifiers = getters['race/getCustomModifiers'];
 
   if (!race) {
     return 0;
   }
 
-  const statModifiers = race.statModifiers;
+  let total = 0;
 
-  return statModifiers.reduce((total, modifier) => {
-    if (Array.isArray(modifier.stat)) {
-      // TODO: implement selecting stat from given list
-    }
-
+  total += race.statModifiers.reduce((carry, modifier) => {
     if (modifier.stat === currentStat) {
-      return total + modifier.modifier;
+      return carry + modifier.modifier;
     }
 
-    return total;
+    return carry;
   }, 0);
+
+  total += customModifiers.reduce((carry, modifier) => {
+    if (modifier.stat === currentStat) {
+      return carry + modifier.modifier;
+    }
+
+    return carry;
+  }, 0);
+
+  return total;
 }
